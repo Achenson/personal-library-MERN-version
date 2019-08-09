@@ -11,8 +11,19 @@
 var expect = require('chai').expect;
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectId;
+var dotenv = require('dotenv');
+var mongoose = require('mongoose');
+
+dotenv.config();
+
 const MONGODB_CONNECTION_STRING = process.env.DB;
 //Example connection: MongoClient.connect(MONGODB_CONNECTION_STRING, function(err, db) {});
+
+mongoose
+  .connect(MONGODB_CONNECTION_STRING, { useNewUrlParser: true })
+  .then(() => console.log("connection succesfull"))
+  .catch(err => console.log(err));
+
 
 module.exports = function (app) {
 
