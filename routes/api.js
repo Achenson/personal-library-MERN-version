@@ -13,6 +13,12 @@ var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectId;
 var dotenv = require('dotenv');
 var mongoose = require('mongoose');
+var shortid = require("shortid");
+
+//userId: {
+  //type: String,
+  //default: shortid.generate
+//},
 
 dotenv.config();
 
@@ -27,6 +33,30 @@ mongoose
 
 module.exports = function (app) {
 
+  const BookSchema = new mongoose.Schema({
+    title: {
+      type: String,
+      required: true
+    },
+    _id: {
+      type: String,
+      default: shortid.generate
+    },
+    comments: {
+      type: Array,
+      default: []
+    }
+
+  })
+
+  const Book = mongoose.model('Book', BookSchema);
+
+
+
+
+
+
+
   app.route('/api/books')
     .get(function (req, res){
       //response will be array of book objects
@@ -35,6 +65,20 @@ module.exports = function (app) {
     
     .post(function (req, res){
       var title = req.body.title;
+
+      let newBook = new Book({
+        title: title
+
+      })
+
+      newBook.save(err => {
+        if (err) return console.error(err)
+      })
+
+      console.log(req.body);
+      res.json(newBook);
+      
+
       //response will contain new book object including atleast _id and title
     })
     
