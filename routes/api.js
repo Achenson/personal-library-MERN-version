@@ -81,6 +81,11 @@ module.exports = function (app) {
 
       //response will contain new book object including atleast _id and title
     })
+
+
+
+
+
     
     .delete(function(req, res){
       //if successful response will be 'complete delete successful'
@@ -97,6 +102,33 @@ module.exports = function (app) {
     .post(function(req, res){
       var bookid = req.params.id;
       var comment = req.body.comment;
+
+
+      Book.findOneAndUpdate(
+        {
+          _id: bookid
+        },
+        {
+          $push: {
+            comments: comment
+            
+          }
+        }
+      ).exec( (err, data) => {
+        if (err) return console.error(err);
+
+        if(data) {
+          console.log('Book updated')
+         
+          res.json({
+            title: data.title
+          });
+
+        }
+      })
+
+
+
       //json res format same as .get
     })
     
