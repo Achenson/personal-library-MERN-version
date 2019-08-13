@@ -76,7 +76,24 @@ suite('Functional Tests', function() {
     suite('POST /api/books/[id] => add comment/expect book object with id', function(){
       
       test('Test POST /api/books/[id] with comment', function(done){
-        //done();
+        chai.request(server)
+        .post('/api/books/:id')
+        .send({
+         req.body.id: 'GdPm0TDh_',
+         req.body.comment: 'mocha test comment'
+
+        })
+        .end(function(err, res){
+          assert.equal(res.status, 200);
+          assert.isArray(res.body, 'response should be an array');
+          assert.property(res.body[0], 'commentcount', 'Books in array should contain commentcount');
+          assert.property(res.body[0], 'title', 'Books in array should contain title');
+          assert.property(res.body[0], '_id', 'Books in array should contain _id');
+          done();
+        });
+
+
+        
       });
       
     });

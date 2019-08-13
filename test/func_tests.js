@@ -30,3 +30,19 @@ describe('Routing tests', function() {
 
   })
 })
+
+describe('POST /api/book/[id] -> add comment/expect book object with id', function() {
+
+  it('Test POST /api/books/[id] with comment', function(done) {
+    chai
+    .request(server)
+    .post('api/books/:id')
+    .send({
+      _id: 'GdPm0TDh_',
+      comment: 
+
+    })
+
+
+  })
+})

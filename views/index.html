@@ -71,15 +71,36 @@
             crossorigin="anonymous"></script>
     <script src="/public/client.js"></script>           
     <script>
-      /*
-      *  For #sampleposting to update form action url to test inputs book id
-      */
-      $(function() {
+
+      //js script is needed to set action atributes in 
+      //#commenttest form, that way the url for post is changing
+      //with the id
+      
+
+     // let commentTest
+ /*     
+ $(function() {
        $('#commentTest').submit(function(){
          var id = $('#idinputtest').val();
          $(this).attr('action', "/api/books/" + id);
        });
       });
+
+      */
+
+      //For #sampleposting to update form action url to test inputs book id
+      
+
+     let commentTest = document.getElementById('commentTest');
+     let updateId = document.getElementById('idinputtest')
+
+     commentTest.onsubmit = function () {
+       let id = updateId.value;
+       this.setAttribute('action', 'api/books/' + id);
+    
+
+     }
+     
    </script>
   </body>
 </html>

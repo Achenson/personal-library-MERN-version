@@ -121,7 +121,10 @@ module.exports = function (app) {
           console.log('Book updated')
          
           res.json({
-            title: data.title
+            _id: data._id,
+            title: data.title,
+            //data is an object return with find, but before update
+            comments: [...data.comments, comment]
           });
 
         }
