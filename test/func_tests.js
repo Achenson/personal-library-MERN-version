@@ -17,6 +17,8 @@ describe('Routing tests', function() {
      .get('/api/books')
      .end(function(err, res){
        assert.equal(res.status, 200);
+       assert.equal(res.type, "application/json");
+
        assert.isArray(res.body, 'response should be an array');
        assert.property(res.body[0], 'commentcount', 'Books in array should contain commentcount');
        assert.property(res.body[0], 'title', 'Books in array should contain title');
@@ -50,13 +52,57 @@ describe('Routing tests', function() {
 
 
   })
+
+
+
+  it('Test POST /api/books with no title given', function(done) {
+    chai
+    .request(server)
+    .post('/api/books')
+    .send({
+      title: ''
+    })
+    .end(function(err, res) {
+      assert.equal(res.status, 200);
+      assert.equal(res.type, "application/json");
+
+      
+      assert.equal(res.body.message, 'please enter book title');
+    
+      done();
+
+
+    })
+
+
+    
+  });
+  
+
+
+
+
+
 })
 
 describe('GET /api/books/[id] => book object with [id]', function(){
       
- // it('Test GET /api/books/[id] with id not in db',  function(done){
-   // //done();
- // });
+ it('Test GET /api/books/[id] with id not in db',  function(done){
+  chai.request(server)
+  .get('/api/books/idnotpresent24525626')
+  .end(function(err, res){
+    assert.equal(res.status, 200);
+    assert.equal(res.type, "application/json");
+
+    assert.equal(res.body.message, 'no book exists');
+    
+    
+
+
+
+   done();
+  })
+ });
   
   it('Test GET /api/books/[id] with valid id in db',  function(done){
     chai.request(server)

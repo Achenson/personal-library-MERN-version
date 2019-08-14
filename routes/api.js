@@ -76,18 +76,22 @@ module.exports = function(app) {
     .post(function(req, res) {
       var title = req.body.title;
 
-      let newBook = new Book({
-        title: title
-      });
+      if (title === "") {
+        res.json({ message: "please enter book title" });
+      } else {
+        let newBook = new Book({
+          title: title
+        });
 
-      newBook.save(err => {
-        if (err) return console.error(err);
-      });
+        newBook.save(err => {
+          if (err) return console.error(err);
+        });
 
-      console.log(req.body);
-      res.json(newBook);
+        console.log(req.body);
+        res.json(newBook);
 
-      //response will contain new book object including atleast _id and title
+        //response will contain new book object including atleast _id and title
+      }
     })
 
     .delete(function(req, res) {
@@ -99,21 +103,18 @@ module.exports = function(app) {
     .get(function(req, res) {
       var bookIdPar = req.params.id;
 
-
-      Book.findOne( {
+      Book.findOne({
         _id: bookIdPar
-      })
-        .exec(
-          (err, data) => {
-            if (err) return console.error(err);
+      }).exec((err, data) => {
+        if (err) return console.error(err);
 
-            res.json(data)
+        if (data !== null) {
+          res.json(data);
+        } else {
+          res.json({ message: "no book exists" });
+        }
+      });
 
-
-          }
-        )
-
-     
       //json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]}
     })
 
