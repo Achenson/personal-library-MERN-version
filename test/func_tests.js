@@ -36,11 +36,22 @@ describe('POST /api/book/[id] -> add comment/expect book object with id', functi
   it('Test POST /api/books/[id] with comment', function(done) {
     chai
     .request(server)
-    .post('api/books/:id')
+    .post('/api/books/GdPm0TDh_')
     .send({
-      _id: 'GdPm0TDh_',
-      comment: 
+      id: 'GdPm0TDh_',
+      comment: 'mocha test comment'
 
+    })
+    .end(function(err,res) {
+      assert.equal(res.status, 200);
+      assert.equal(res.type, "application/json");
+
+      assert.equal(res.body._id, 'GdPm0TDh_');
+      assert.equal(res.body.title, `test book`);
+      assert.isArray(res.body.comments);
+
+
+      done();
     })
 
 

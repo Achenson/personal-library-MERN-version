@@ -100,7 +100,7 @@ module.exports = function (app) {
     })
     
     .post(function(req, res){
-      var bookid = req.params.id;
+      var bookid = req.body.id;
       var comment = req.body.comment;
 
 

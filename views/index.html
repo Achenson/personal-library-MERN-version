@@ -66,10 +66,7 @@
     </div>
     <hr style='margin: 50px'>
 
-    <script src="https://code.jquery.com/jquery-2.2.1.min.js"
-            integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
-            crossorigin="anonymous"></script>
-    <script src="/public/client.js"></script>           
+            
     <script>
 
       //js script is needed to set action atributes in 
@@ -92,11 +89,12 @@
       
 
      let commentTest = document.getElementById('commentTest');
-     let updateId = document.getElementById('idinputtest')
+     let updateId = document.getElementById('idinputtest');
 
      commentTest.onsubmit = function () {
-       let id = updateId.value;
-       this.setAttribute('action', 'api/books/' + id);
+       updateId_val = updateId.value;
+       
+       this.setAttribute('action', 'api/books/' + updateId_val);
     
 
      }
