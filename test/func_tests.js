@@ -7,6 +7,23 @@ chai.use(chaiHttp);
 
 describe('Routing tests', function() {
 
+
+  it('#example Test GET /api/books', function(done){
+    chai.request(server)
+     .get('/api/books')
+     .end(function(err, res){
+       assert.equal(res.status, 200);
+       assert.isArray(res.body, 'response should be an array');
+       assert.property(res.body[0], 'commentcount', 'Books in array should contain commentcount');
+       assert.property(res.body[0], 'title', 'Books in array should contain title');
+       assert.property(res.body[0], '_id', 'Books in array should contain _id');
+       done();
+     });
+ });
+
+
+
+
   it("POST /api/books with title => create book object/expect book object", function(done) {
     chai
     .request(server)
