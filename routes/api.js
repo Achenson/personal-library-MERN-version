@@ -140,7 +140,7 @@ module.exports = function(app) {
           res.json({
             _id: data._id,
             title: data.title,
-            //data is an object return with find, but before update
+            //data is an object return with find, but before update  !!!
             comments: [...data.comments, comment]
           });
         }
@@ -150,7 +150,36 @@ module.exports = function(app) {
     })
 
     .delete(function(req, res) {
-      var bookid = req.params.id;
+      var bookIdPar = req.params.id;
+
+      Book.findOneAndDelete( {
+        _id: bookIdPar
+      })
+      .exec(
+        (err,data) => {
+          if (err) return console.error(err);
+
+          if(data !== null) {
+            res.json({message: 'no book exists'})
+          } else {
+            res.json({message: 'delete successful'})
+          }
+
+         
+
+         
+
+        }
+      )
+
+  
+
+
+
+
+
+
+
       //if successful response will be 'delete successful'
     });
 };
