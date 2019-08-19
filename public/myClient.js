@@ -86,13 +86,20 @@ fetch(myURL)
               detailComments.innerHTML += `<li>${el}</li>`;
             });
 
+            let commentFrontEnd = document.getElementById("commentFrontEnd");
+            let inputFrontEnd = document.getElementById("inputFrontEnd");
+            let deleteOne = document.getElementById('deleteOneFrontEnd');
+
+
+
+            commentFrontEnd.style.display = 'inline';
+            deleteOne.style.display = 'inline';
             
 
             //make add comment & delete visible
             //...
 
-            let commentFrontEnd = document.getElementById("commentFrontEnd");
-            let inputFrontEnd = document.getElementById("inputFrontEnd");
+           
             //add comment front end 
             commentFrontEnd.onsubmit = function(e) {
               e.preventDefault();
@@ -122,7 +129,7 @@ fetch(myURL)
 
             //Delete Book
 
-            let deleteOne = document.getElementById('deleteOneFrontEnd');
+            
 
             deleteOne.onsubmit = function(e) {
               e.preventDefault();
