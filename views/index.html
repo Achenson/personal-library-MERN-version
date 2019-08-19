@@ -91,7 +91,7 @@
 
     <div id="sampleui">
       <h2 style="text-align: left">Sample Front-End:</h2>
-      <form id="newBookForm" class="border">
+      <form id="newBookForm"  method="post">
         <input
           type="text"
           id="bookTitleToAdd"
@@ -110,6 +110,8 @@
         <p>Select a book to see it's details and comments</p>
         <p id="detailTitle"></p>
         <ol id="detailComments"></ol>
+
+
         <form action="" method="post" id="commentFrontEnd">
           <input
             type="text"
@@ -130,7 +132,7 @@
 
       <button id="deleteAllBooks">Delete all books...</button>
     </div>
-    <hr style="margin: 50px" />
+    
     <script type="text/javascript" src="../public/myClient.js"></script>
     <script>
       let commentTest = document.getElementById("commentTest");

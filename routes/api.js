@@ -89,6 +89,7 @@ module.exports = function(app) {
 
         console.log(req.body);
         res.json(newBook);
+        
 
         //response will contain new book object including atleast _id and title
       }
@@ -152,33 +153,17 @@ module.exports = function(app) {
     .delete(function(req, res) {
       var bookIdPar = req.params.id;
 
-      Book.findOneAndDelete( {
+      Book.findOneAndDelete({
         _id: bookIdPar
-      })
-      .exec(
-        (err,data) => {
-          if (err) return console.error(err);
+      }).exec((err, data) => {
+        if (err) return console.error(err);
 
-          if(data !== null) {
-            res.json({message: 'no book exists'})
-          } else {
-            res.json({message: 'delete successful'})
-          }
-
-         
-
-         
-
+        if (data === null) {
+          res.json({ message: "no book exists" });
+        } else {
+          res.json({ message: "delete successful" });
         }
-      )
-
-  
-
-
-
-
-
-
+      });
 
       //if successful response will be 'delete successful'
     });

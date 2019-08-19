@@ -23,6 +23,39 @@ fetch(myURL)
 
     displayList.innerHTML = displayListInnerHtml;
 
+    //frontEnd - newBookForm
+
+    let newBookForm = document.getElementById('newBookForm');
+    let newBookInput = document.getElementById('bookTitleToAdd');
+
+    newBookForm.onsubmit = function(e) {
+      e.preventDefault()
+
+      fetch(myURL, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          title: newBookInput.value
+          
+        })
+      })
+        .then(res => res.json())
+        .then(data0 => {
+          console.log(data0)
+          window.location.reload(true);
+        })
+
+
+
+    }
+
+
+
+
+
+
     //gettin all <li> children of #displayList
     let allBooks = document.querySelectorAll("#displayList > li");
 
@@ -86,6 +119,33 @@ fetch(myURL)
                 });
 
             };
+
+            //Delete Book
+
+            let deleteOne = document.getElementById('deleteOneFrontEnd');
+
+            deleteOne.onsubmit = function(e) {
+              e.preventDefault();
+
+              fetch(singleBookURL, {
+                method: 'DELETE',
+                headers: {
+                  "Content-Type": "application/json"
+                }
+              }
+              )
+              .then(res => res.json())
+              .then( data3=> {
+                console.log('')
+                console.log(data3);
+                
+                
+              })
+              
+            
+            }
+
+
 
 
 
