@@ -135,10 +135,12 @@ fetch(myURL)
               }
               )
               .then(res => res.json())
-              .then( data3=> {
+              .then(data3 => {
                 console.log('')
                 console.log(data3);
-                window.location.reload(true);
+                
+                detailComments.innerHTML = `<p>${data3.message}</p><p>Refresh the page</p>`;
+
 
                 
                 
