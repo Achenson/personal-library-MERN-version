@@ -138,6 +138,8 @@ fetch(myURL)
               .then( data3=> {
                 console.log('')
                 console.log(data3);
+                window.location.reload(true);
+
                 
                 
               })
