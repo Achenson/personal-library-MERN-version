@@ -23,7 +23,7 @@ var shortid = require("shortid");
 dotenv.config();
 
 const MONGODB_CONNECTION_STRING = process.env.DB;
-//Example connection: MongoClient.connect(MONGODB_CONNECTION_STRING, function(err, db) {});
+
 
 mongoose
   .connect(MONGODB_CONNECTION_STRING, { useNewUrlParser: true })
@@ -150,13 +150,13 @@ module.exports = function(app) {
           res.json({
             _id: data._id,
             title: data.title,
-            //data is an object return with find, but before update  !!!
+            //data is an object returned with find, but before update  !!!
             comments: [...data.comments, comment]
           });
         }
       });
 
-      //json res format same as .get
+      
     })
 
     .delete(function(req, res) {

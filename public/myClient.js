@@ -110,11 +110,12 @@ fetch(myURL)
             let inputFrontEnd = document.getElementById("inputFrontEnd");
             let deleteOne = document.getElementById("deleteOneFrontEnd");
 
+            
+            //make add comment & delete visible
             commentFrontEnd.style.display = "inline";
             deleteOne.style.display = "inline";
 
-            //make add comment & delete visible
-            //...
+            
 
             //add comment front end
             commentFrontEnd.onsubmit = function(e) {
@@ -142,7 +143,7 @@ fetch(myURL)
                 });
             };
 
-            //Delete Book
+            //Delete Single Book
 
             deleteOne.onsubmit = function(e) {
               e.preventDefault();
@@ -168,4 +169,4 @@ fetch(myURL)
     }
   });
 
-//rendering all books
+

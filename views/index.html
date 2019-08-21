@@ -149,6 +149,7 @@
     
     <script type="text/javascript" src="../public/myClient.js"></script>
     <script>
+      // changing action url according to id -> to make adding comment (in test Api repsonses part of webpage) working
       let commentTest = document.getElementById("commentTest");
       let updateId = document.getElementById("idinputtest");
 
@@ -157,9 +158,7 @@
 
         this.setAttribute("action", "api/books/" + updateId_val);
       };
-      /*
-       *  For #sampleposting to update form action url to test inputs book id
-       */
+     
     </script>
   </body>
 </html>
