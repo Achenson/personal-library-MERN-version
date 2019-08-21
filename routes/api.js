@@ -89,7 +89,6 @@ module.exports = function(app) {
 
         console.log(req.body);
         res.json(newBook);
-        
 
         //response will contain new book object including atleast _id and title
       }
@@ -97,6 +96,16 @@ module.exports = function(app) {
 
     .delete(function(req, res) {
       //if successful response will be 'complete delete successful'
+
+      Book.deleteMany({}).exec((err, data) => {
+        if (err) {
+          console.error(err);
+
+          res.json({ message: "cannot delete" });
+        } else {
+          res.json({ message: "complete delete successful" });
+        }
+      });
     });
 
   app

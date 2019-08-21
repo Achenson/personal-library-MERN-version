@@ -6,6 +6,18 @@ let displayList = document.getElementById("displayList");
 let detailTitle = document.getElementById("detailTitle");
 let detailComments = document.getElementById("detailComments");
 
+/*
+Nesting structure:
+1. fetching all books
+    2.form for a new book
+    2.5. delete all books
+    3. attaching click event to all books fetch in ad.1 to get proper URL address
+        4. fetching sigleBook -> getting details of the book that was clicked & making comment form and deleteOneBook from visible
+            5.comment form onsubmit (fetch post)
+            6. deleteOneBook form onsubmit  (fetch delete)
+
+*/
+
 //gettin all books
 let displayListInnerHtml = "";
 
@@ -25,35 +37,47 @@ fetch(myURL)
 
     //frontEnd - newBookForm
 
-    let newBookForm = document.getElementById('newBookForm');
-    let newBookInput = document.getElementById('bookTitleToAdd');
+    let newBookForm = document.getElementById("newBookForm");
+    let newBookInput = document.getElementById("bookTitleToAdd");
 
     newBookForm.onsubmit = function(e) {
-      e.preventDefault()
+      e.preventDefault();
 
       fetch(myURL, {
-        method: 'POST',
+        method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
           title: newBookInput.value
-          
         })
       })
         .then(res => res.json())
         .then(data0 => {
-          console.log(data0)
+          console.log(data0);
           window.location.reload(true);
+        });
+    };
+
+
+    // delete all books
+
+    let deleteAllBooks = document.getElementById('deleteAllBooks');
+    let deleteAllDisplay = document.getElementById('deleteAllDisplay');
+
+    deleteAllBooks.onclick = function() {
+      fetch(myURL, {
+        method: "DELETE",
+      })
+        .then(res=>res.json())
+        .then(dataDelete => {
+          console.log(dataDelete);
+          deleteAllDisplay.innerText = dataDelete.message + ', please refresh the page';
+         
+
+          
         })
-
-
-
     }
-
-
-
-
 
 
     //gettin all <li> children of #displayList
@@ -88,19 +112,15 @@ fetch(myURL)
 
             let commentFrontEnd = document.getElementById("commentFrontEnd");
             let inputFrontEnd = document.getElementById("inputFrontEnd");
-            let deleteOne = document.getElementById('deleteOneFrontEnd');
+            let deleteOne = document.getElementById("deleteOneFrontEnd");
 
-
-
-            commentFrontEnd.style.display = 'inline';
-            deleteOne.style.display = 'inline';
-            
+            commentFrontEnd.style.display = "inline";
+            deleteOne.style.display = "inline";
 
             //make add comment & delete visible
             //...
 
-           
-            //add comment front end 
+            //add comment front end
             commentFrontEnd.onsubmit = function(e) {
               e.preventDefault();
 
@@ -124,44 +144,29 @@ fetch(myURL)
                     data2.comments[data2.comments.length - 1]
                   }</li>`;
                 });
-
             };
 
             //Delete Book
-
-            
 
             deleteOne.onsubmit = function(e) {
               e.preventDefault();
 
               fetch(singleBookURL, {
-                method: 'DELETE',
+                method: "DELETE",
                 headers: {
                   "Content-Type": "application/json"
                 }
-              }
-              )
-              .then(res => res.json())
-              .then(data3 => {
-                console.log('')
-                console.log(data3);
-                
-                detailComments.innerHTML = `<p>${data3.message}</p><p>Refresh the page</p>`;
-
-
-                
-                
               })
-              
-            
-            }
+                .then(res => res.json())
+                .then(data3 => {
+                  console.log("");
+                  console.log(data3);
 
-
-
-
-
-
-            
+                  detailComments.innerHTML = `<p>${
+                    data3.message
+                  }</p><p>Refresh the page</p>`;
+                });
+            };
           });
       };
     }
