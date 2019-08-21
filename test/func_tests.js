@@ -12,6 +12,7 @@ chai.use(chaiHttp);
 describe('Routing tests', function() {
 
 //get all books
+// stops working if delete all books button is pressed! works after 2nd try though
   it('#example Test GET /api/books', function(done){
     chai.request(server)
      .get('/api/books')
@@ -104,15 +105,16 @@ describe('GET /api/books/[id] => book object with [id]', function(){
   })
  });
   
+ // stops working if delete all books button is pressed!
   it('Test GET /api/books/[id] with valid id in db',  function(done){
     chai.request(server)
-    .get('/api/books/Wx7ZA7z39')
+    .get('/api/books/nBDf6F8s4')
     .end(function(err, res){
       assert.equal(res.status, 200);
       assert.equal(res.type, "application/json");
 
-      assert.equal(res.body._id, "Wx7ZA7z39");
-      assert.equal(res.body.title, "test book2");
+      assert.equal(res.body._id, "nBDf6F8s4");
+      assert.equal(res.body.title, "mocha update");
       assert.isArray(res.body.comments);
 
 
@@ -132,12 +134,14 @@ describe('GET /api/books/[id] => book object with [id]', function(){
 //'update' post
 describe('POST /api/book/[id] -> add comment/expect book object with id', function() {
 
+
+  // stops working if delete all books button is pressed!
   it('Test POST /api/books/[id] with comment', function(done) {
     chai
     .request(server)
-    .post('/api/books/GdPm0TDh_')
+    .post('/api/books/nBDf6F8s4')
     .send({
-      id: 'GdPm0TDh_',
+      id: 'nBDf6F8s4',
       comment: 'mocha test comment'
 
     })
@@ -145,8 +149,8 @@ describe('POST /api/book/[id] -> add comment/expect book object with id', functi
       assert.equal(res.status, 200);
       assert.equal(res.type, "application/json");
 
-      assert.equal(res.body._id, 'GdPm0TDh_');
-      assert.equal(res.body.title, `test book`);
+      assert.equal(res.body._id, 'nBDf6F8s4');
+      assert.equal(res.body.title, `mocha update`);
       assert.isArray(res.body.comments);
 
 
