@@ -59,26 +59,22 @@ fetch(myURL)
         });
     };
 
-
     // delete all books
 
-    let deleteAllBooks = document.getElementById('deleteAllBooks');
-    let deleteAllDisplay = document.getElementById('deleteAllDisplay');
+    let deleteAllBooks = document.getElementById("deleteAllBooks");
+    let deleteAllDisplay = document.getElementById("deleteAllDisplay");
 
     deleteAllBooks.onclick = function() {
       fetch(myURL, {
-        method: "DELETE",
+        method: "DELETE"
       })
-        .then(res=>res.json())
+        .then(res => res.json())
         .then(dataDelete => {
           console.log(dataDelete);
-          deleteAllDisplay.innerText = dataDelete.message + ', please refresh the page';
-         
-
-          
-        })
-    }
-
+          deleteAllDisplay.innerText =
+            dataDelete.message + ", please refresh the page";
+        });
+    };
 
     //gettin all <li> children of #displayList
     let allBooks = document.querySelectorAll("#displayList > li");
