@@ -50,42 +50,54 @@ function Comments({ comments, addComment, deleteBook, books }) {
     setValue("");
   }
 
-  if (!comments.isHidden) {
-    return (
-      <div style={{ backgroundColor: "lightgray" }}>
-        <p>
-          <b>{books[comments.indexOfDisplayedBook].title}</b>
-          {` (id: ${books[comments.indexOfDisplayedBook]._id})`}
-        </p>
-
-        <ul>
-          {books[comments.indexOfDisplayedBook].arrOfComments.map(
-            (comment, index) => (
-              <li key={index}>{comment}</li>
-            )
-          )}
-        </ul>
-
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="New Comment"
-            value={value}
-            onChange={e => setValue(e.target.value)}
-          />
-          <br></br>
-          <button style={{ width: "148px", height: "25px" }}>
-            Add Comment
-          </button>
-        </form>
-        <button style={{ width: "148px", height: "25px" }} onClick={deleteBook}>
-          Delete Book
-        </button>
-      </div>
-    );
-  } else {
+  if (comments.isHidden) {
     return null;
   }
+
+  return (
+    <div style={{ backgroundColor: "lightgray" }}>
+      <p>
+        <b>{books[comments.indexOfDisplayedBook].title}</b>
+        {` (id: ${books[comments.indexOfDisplayedBook]._id})`}
+      </p>
+      {comments.isDeleted ? (
+        <div>
+          <p>delete successful</p>
+          <br></br>
+          <br></br>
+          <p>Refresh the page</p>
+        </div>
+      ) : (
+        <div>
+          <ul>
+            {books[comments.indexOfDisplayedBook].arrOfComments.map(
+              (comment, index) => (
+                <li key={index}>{comment}</li>
+              )
+            )}
+          </ul>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="New Comment"
+              value={value}
+              onChange={e => setValue(e.target.value)}
+            />
+            <br></br>
+            <button style={{ width: "148px", height: "25px" }}>
+              Add Comment
+            </button>
+          </form>
+          <button
+            style={{ width: "148px", height: "25px" }}
+            onClick={deleteBook}
+          >
+            Delete Book
+          </button>
+        </div>
+      )}
+    </div>
+  );
 }
 
 function BooksDisplay({ index, book, dispComments }) {
@@ -115,6 +127,7 @@ function App() {
 
   const [comments, setComments] = useState({
     isHidden: true,
+    idDeleted: false,
     indexOfDisplayedBook: 0
   });
 
@@ -124,6 +137,7 @@ function App() {
   function dispComments(index) {
     const newComments = {
       isHidden: false,
+      isDeleted: false,
       indexOfDisplayedBook: index
     };
 
@@ -131,7 +145,10 @@ function App() {
   }
 
   function addBook(value) {
-    const newBooks = [...books, { _id: uuid(), title: value, arrOfComments: [] }];
+    const newBooks = [
+      ...books,
+      { _id: uuid(), title: value, arrOfComments: [] }
+    ];
     setBooks(newBooks);
   }
 
@@ -143,23 +160,28 @@ function App() {
     setBooks(booksWithNewComments);
   }
 
-  function deleteBook() {
+  function deleteBook(bookThatWasDeleted) {
     const newBooks = [...books];
 
-    function findBookToDelete(el) {
-      return el._id === comments.objectId;
-    }
-
-    let indexOFBookToDelete = newBooks.findIndex(findBookToDelete);
-
-    const newBooks2 = newBooks.splice(indexOFBookToDelete, 1);
+    const newBooks2 = newBooks.splice(
+      newBooks[comments.indexOfDisplayedBook],
+      1
+    );
 
     setBooks(newBooks2);
+
+    const newComments = {
+      isHidden: false,
+      isDeleted: true,
+      indexOfDisplayedBook: comments.indexOfDisplayedBook
+    };
+
+    setComments(newComments);
   }
 
   return (
     <div className="App">
-      <h1>Test di</h1>
+      <h1>Sample Front-End</h1>
       <NewBookForm addBook={addBook} />
       <div className="book-list">
         {books.map((book, index) => (
