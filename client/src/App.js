@@ -57,8 +57,8 @@ function Comments({ comments, addComment, deleteBook, books }) {
   return (
     <div style={{ backgroundColor: "lightgray" }}>
       <p>
-        <b>{books[comments.indexOfDisplayedBook].title}</b>
-        {` (id: ${books[comments.indexOfDisplayedBook]._id})`}
+        <b>{comments.title}</b>
+        {` (id: ${comments._id})`}
       </p>
       {comments.isDeleted ? (
         <div>
@@ -70,7 +70,7 @@ function Comments({ comments, addComment, deleteBook, books }) {
       ) : (
         <div>
           <ul>
-            {books[comments.indexOfDisplayedBook].arrOfComments.map(
+            {books[comments.index].arrOfComments.map(
               (comment, index) => (
                 <li key={index}>{comment}</li>
               )
@@ -127,8 +127,12 @@ function App() {
 
   const [comments, setComments] = useState({
     isHidden: true,
-    idDeleted: false,
-    indexOfDisplayedBook: 0
+    isDeleted: false,
+    index: null,
+    _id: 'no id',
+    title: "no title",
+    arrOfComments: []
+    
   });
 
   console.log(setBooks);
@@ -138,7 +142,10 @@ function App() {
     const newComments = {
       isHidden: false,
       isDeleted: false,
-      indexOfDisplayedBook: index
+      index: index,
+      _id: books[index]._id,
+      title: books[index].title,
+      arrOfComments: books[index].arrOfComments
     };
 
     setComments(newComments);
@@ -154,7 +161,7 @@ function App() {
 
   function addComment(value) {
     const booksWithNewComments = [...books];
-    booksWithNewComments[comments.indexOfDisplayedBook].arrOfComments.push(
+    booksWithNewComments[comments.index].arrOfComments.push(
       value
     );
     setBooks(booksWithNewComments);
@@ -162,18 +169,29 @@ function App() {
 
   function deleteBook(bookThatWasDeleted) {
     const newBooks = [...books];
+    console.log("newBooks");
+    
+    console.log(newBooks);
 
-    const newBooks2 = newBooks.splice(
-      newBooks[comments.indexOfDisplayedBook],
-      1
-    );
+    console.log('index');
+    console.log(comments.index);
+    newBooks.splice(
+      comments.index, 1);
+    console.log('new books2');
+    
+    console.log(newBooks);
 
-    setBooks(newBooks2);
+    setBooks(newBooks);
 
     const newComments = {
       isHidden: false,
       isDeleted: true,
-      indexOfDisplayedBook: comments.indexOfDisplayedBook
+      index: comments.index,
+      _id: comments._id,
+      title: comments.title,
+      arrOfComments: comments.arrOfComments
+
+
     };
 
     setComments(newComments);
