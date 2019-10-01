@@ -149,12 +149,13 @@ function BooksDisplay({ index, book, dispComments }) {
 }
 
 function App() {
-  const [books, setBooks] = useState(
-    []
-  );
+  const [books, setBooks] = useState([]);
+
+
 
   useEffect(() => {
     async function fetchData() {
+
       const res = await fetch("http://localhost:5000/api/books");
       res
         .json()
@@ -186,7 +187,6 @@ function App() {
     comments: []
   });
 
-
   function dispComments(index) {
     const newComments = {
       isHidden: false,
@@ -205,8 +205,6 @@ function App() {
     //const newBooks = [...books, { _id: uuid(), title: value, comments: [] }];
     //=setBooks(newBooks);
 
-    
-    
     fetch("http://localhost:5000/api/books", {
       method: "POST",
       headers: {
@@ -222,8 +220,6 @@ function App() {
         console.log(data0);
         //window.location.reload(true);
       });
-
-
   }
 
   function addComment(value, currentId) {
@@ -231,9 +227,9 @@ function App() {
     //booksWithNewComments[comments.index].comments.push(value);
     //setBooks(booksWithNewComments);
 
-    let singleBookURL = new URL (
-      'http://localhost:5000' + "/api/books/" + currentId
-    )
+    let singleBookURL = new URL(
+      "http://localhost:5000" + "/api/books/" + currentId
+    );
 
     fetch(singleBookURL, {
       method: "POST",
@@ -250,18 +246,13 @@ function App() {
       .then(data2 => {
         //updating comments
         console.log(data2);
-
-       
       });
-
-
   }
 
   function deleteBook(currentId) {
-
-    let singleBookURL = new URL (
-      'http://localhost:5000' + "/api/books/" + currentId
-    )
+    let singleBookURL = new URL(
+      "http://localhost:5000" + "/api/books/" + currentId
+    );
 
     fetch(singleBookURL, {
       method: "DELETE",
@@ -272,11 +263,7 @@ function App() {
       .then(res => res.json())
       .then(data3 => {
         console.log(data3);
-
-       
       });
-
-
 
     /*
     const newBooks = [...books];
@@ -297,8 +284,6 @@ function App() {
     };
 
     setComments(newComments);
-
-
   }
 
   function deleteAllBooks() {
@@ -311,8 +296,21 @@ function App() {
       title: comments.title,
       comments: comments.comments
     };
+
+
     setComments(newComments);
-    setBooks([]);
+    //setBooks([]);
+
+    fetch("http://localhost:5000/api/books", {
+      method: "DELETE"
+    })
+      .then(res => res.json())
+      .then(dataDelete => {
+        console.log(dataDelete);
+      
+      });
+
+
   }
 
   return (
