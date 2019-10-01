@@ -118,7 +118,7 @@ function Comments({ comments, addComment, deleteBook, books, deleteAllBooks }) {
             </form>
             <button
               style={{ width: "148px", height: "25px" }}
-              onClick={deleteBook}
+              onClick={() => deleteBook(comments._id)}
             >
               Delete Book
             </button>
@@ -151,19 +151,7 @@ function BooksDisplay({ index, book, dispComments }) {
 function App() {
   const [books, setBooks] = useState(
     []
-    /*
-    { _id: uuid(), title: "New book", comments: ["first comment"] },
-    { _id: uuid(), title: "1984", comments: [] },
-    { _id: uuid(), title: "Test Book ", comments: ["one", "two"] },
-    {
-      _id: uuid(),
-      title: " Wikipedia offline",
-      comments: ["test comment"]
-    }
-    */
   );
-
-  //console.log(books);
 
   useEffect(() => {
     async function fetchData() {
@@ -227,6 +215,7 @@ function App() {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
+        //endpoint: req.body.title
         title: value
       })
     })
@@ -245,12 +234,34 @@ function App() {
     setBooks(booksWithNewComments);
   }
 
-  function deleteBook() {
+  function deleteBook(currentId) {
+
+    let singleBookURL = new URL (
+      'http://localhost:5000' + "/api/books/" + currentId
+    )
+
+    fetch(singleBookURL, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(data3 => {
+        console.log(data3);
+
+       
+      });
+
+
+
+    /*
     const newBooks = [...books];
 
     newBooks.splice(comments.index, 1);
 
     setBooks(newBooks);
+    */
 
     const newComments = {
       isHidden: false,
@@ -263,6 +274,8 @@ function App() {
     };
 
     setComments(newComments);
+
+
   }
 
   function deleteAllBooks() {
