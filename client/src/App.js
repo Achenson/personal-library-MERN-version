@@ -46,7 +46,7 @@ function Comments({ comments, addComment, deleteBook, books, deleteAllBooks }) {
     e.preventDefault();
 
     if (!value) return;
-    addComment(value);
+    addComment(value, comments._id);
     setValue("");
   }
 
@@ -186,8 +186,6 @@ function App() {
     comments: []
   });
 
-  //console.log(setBooks);
- // console.log(books);
 
   function dispComments(index) {
     const newComments = {
@@ -228,10 +226,35 @@ function App() {
 
   }
 
-  function addComment(value) {
-    const booksWithNewComments = [...books];
-    booksWithNewComments[comments.index].comments.push(value);
-    setBooks(booksWithNewComments);
+  function addComment(value, currentId) {
+    //const booksWithNewComments = [...books];
+    //booksWithNewComments[comments.index].comments.push(value);
+    //setBooks(booksWithNewComments);
+
+    let singleBookURL = new URL (
+      'http://localhost:5000' + "/api/books/" + currentId
+    )
+
+    fetch(singleBookURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify({
+        id: currentId,
+        comment: value
+      })
+    })
+      .then(res => res.json())
+      .then(data2 => {
+        //updating comments
+        console.log(data2);
+
+       
+      });
+
+
   }
 
   function deleteBook(currentId) {
