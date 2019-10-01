@@ -62,6 +62,7 @@ module.exports = function(app) {
           newArrayObj._id = el._id;
           newArrayObj.title = el.title;
           newArrayObj.commentcount = el.comments.length;
+          newArrayObj.comments = el.comments;
 
           newData.push(newArrayObj);
         }

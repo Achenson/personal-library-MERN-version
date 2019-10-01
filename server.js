@@ -29,6 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.route('/')
   .get(function (req, res) {
    res.sendFile(process.cwd() + '/views/index.html');
+  //res.sendFile(process.cwd() + '/client/public/index.html');
   });
 
 //For FCC testing purposes

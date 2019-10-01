@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import uuid from "uuid";
 import "./App.css";
 
@@ -100,7 +100,7 @@ function Comments({ comments, addComment, deleteBook, books, deleteAllBooks }) {
             }}
           >
             <ol>
-              {books[comments.index].arrOfComments.map((comment, index) => (
+              {books[comments.index].comments.map((comment, index) => (
                 <li key={index}>{comment}</li>
               ))}
             </ol>
@@ -140,7 +140,7 @@ function BooksDisplay({ index, book, dispComments }) {
         <ul>
           <li onClick={() => dispComments(index)}>
             {book.title}
-            {` - ${book.arrOfComments.length} comments`}
+            {` - ${book.comments.length} comments`}
           </li>
         </ul>
       </div>
@@ -149,16 +149,45 @@ function BooksDisplay({ index, book, dispComments }) {
 }
 
 function App() {
-  const [books, setBooks] = useState([
-    { _id: uuid(), title: "New book", arrOfComments: ["first comment"] },
-    { _id: uuid(), title: "1984", arrOfComments: [] },
-    { _id: uuid(), title: "Test Book ", arrOfComments: ["one", "two"] },
+  const [books, setBooks] = useState(
+    []
+    /*
+    { _id: uuid(), title: "New book", comments: ["first comment"] },
+    { _id: uuid(), title: "1984", comments: [] },
+    { _id: uuid(), title: "Test Book ", comments: ["one", "two"] },
     {
       _id: uuid(),
       title: " Wikipedia offline",
-      arrOfComments: ["test comment"]
+      comments: ["test comment"]
     }
-  ]);
+    */
+  );
+
+  console.log(books);
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch("http://localhost:5000/api/books");
+      res
+        .json()
+        .then(res => setBooks(res))
+        .catch(err => console.log(err));
+    }
+
+    fetchData();
+
+    /*
+    fetch("http://localhost:5000/api/books")
+    
+    .then(res => {
+      console.log(res);
+      //console.log(books);
+      res.json();
+    })
+    .then(res => setBooks(res))
+    .catch((err) => console.log(err))
+    */
+  });
 
   const [comments, setComments] = useState({
     isHidden: true,
@@ -166,7 +195,7 @@ function App() {
     index: null,
     _id: "no id",
     title: "no title",
-    arrOfComments: []
+    comments: []
   });
 
   console.log(setBooks);
@@ -180,23 +209,20 @@ function App() {
       index: index,
       _id: books[index]._id,
       title: books[index].title,
-      arrOfComments: books[index].arrOfComments
+      comments: books[index].comments
     };
 
     setComments(newComments);
   }
 
   function addBook(value) {
-    const newBooks = [
-      ...books,
-      { _id: uuid(), title: value, arrOfComments: [] }
-    ];
+    const newBooks = [...books, { _id: uuid(), title: value, comments: [] }];
     setBooks(newBooks);
   }
 
   function addComment(value) {
     const booksWithNewComments = [...books];
-    booksWithNewComments[comments.index].arrOfComments.push(value);
+    booksWithNewComments[comments.index].comments.push(value);
     setBooks(booksWithNewComments);
   }
 
@@ -214,7 +240,7 @@ function App() {
       index: comments.index,
       _id: comments._id,
       title: comments.title,
-      arrOfComments: comments.arrOfComments
+      comments: comments.comments
     };
 
     setComments(newComments);
@@ -228,18 +254,19 @@ function App() {
       index: comments.index,
       _id: comments._id,
       title: comments.title,
-      arrOfComments: comments.arrOfComments
+      comments: comments.comments
     };
     setComments(newComments);
     setBooks([]);
   }
 
   return (
-   
     <div className="App">
-      <div style={{textAlign: 'center'}}>
+      <div style={{ textAlign: "center" }}>
         <h1>Personal Library </h1>
-        <h3 style={{color: 'gray'}}>FreeCodeCamp Apis And Microservices Project 03 - MERN stack version</h3>
+        <h3 style={{ color: "gray" }}>
+          FreeCodeCamp Apis And Microservices Project 03 - MERN stack version
+        </h3>
       </div>
 
       <h1>Sample Front-End</h1>
