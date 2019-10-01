@@ -151,11 +151,8 @@ function BooksDisplay({ index, book, dispComments }) {
 function App() {
   const [books, setBooks] = useState([]);
 
-
-
   useEffect(() => {
     async function fetchData() {
-
       const res = await fetch("http://localhost:5000/api/books");
       res
         .json()
@@ -297,7 +294,6 @@ function App() {
       comments: comments.comments
     };
 
-
     setComments(newComments);
     //setBooks([]);
 
@@ -307,10 +303,7 @@ function App() {
       .then(res => res.json())
       .then(dataDelete => {
         console.log(dataDelete);
-      
       });
-
-
   }
 
   return (
@@ -321,8 +314,65 @@ function App() {
           FreeCodeCamp Apis And Microservices Project 03 - MERN stack version
         </h3>
       </div>
+      <h2>User Stories</h2>
+      <ol>
+        <li>
+          Nothing from my website will be cached in my client as a security
+          measure.
+        </li>
+        <li>
+          I will see that the site is powered by 'PHP 4.2.0' even though it
+          isn't as a security measure.
+        </li>
+        <li>
+          I can <b>post</b> a <code>title</code> to /api/books to add a book and
+          returned will be the object with the <code>title</code> and a unique
+          <code>_id</code>.
+        </li>
+        <li>
+          I can <b>get</b> /api/books to retrieve an aray of all books
+          containing <code>title</code>, <code>_id</code>, &
+          <code>commentcount</code>.
+        </li>
+        <li>
+          I can <b>get</b> /api/books/[_id] to retrieve a single object of a
+          book containing <code>title</code>, <code>_id</code>, & an array of
+          <code>comments</code> (empty array if no comments present).
+        </li>
+        <li>
+          I can <b>post</b> a <code>comment</code> to /api/books/[_id] to add a
+          comment to a book and returned will be the books object similar to
+          <b>get</b> /api/books/[_id].
+        </li>
+        <li>
+          I can <b>delete</b> /api/books/[_id] to delete a book from the
+          collection. Returned will be 'delete successful' if successful.
+        </li>
+        <li>
+          If I try to request a book that doesn't exist I will get a 'no book
+          exists' message.
+        </li>
+        <li>
+          I can send a <b>delete</b> request to /api/books to delete all books
+          in the database. Returned will be 'complete delete successful' if
+          successful.
+        </li>
+        <li>
+          All 6 functional tests required are completed and passing (3 tests
+          will be broken when 'delete all books' button is pressed! In this
+          case: add a book to the data base, update id and title in
+          /test/func_tests.js).
+        </li>
+        <li>
+          (To run tests: install mocha globally, type 'mocha' in the terminal).
+        </li>
+        <li>
+          <b>REACT hooks Front-End implemented</b>
+        </li>
+      </ol>
+      <hr></hr>
 
-      <h1>Sample Front-End</h1>
+      <h2>Sample Front-End</h2>
       <NewBookForm addBook={addBook} />
       <div className="book-list">
         {books.map((book, index) => (
