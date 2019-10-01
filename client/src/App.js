@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import uuid from "uuid";
+//import uuid from "uuid";
 import "./App.css";
 
 /*
@@ -163,7 +163,7 @@ function App() {
     */
   );
 
-  console.log(books);
+  //console.log(books);
 
   useEffect(() => {
     async function fetchData() {
@@ -198,8 +198,8 @@ function App() {
     comments: []
   });
 
-  console.log(setBooks);
-  console.log(books);
+  //console.log(setBooks);
+ // console.log(books);
 
   function dispComments(index) {
     const newComments = {
@@ -216,8 +216,27 @@ function App() {
   }
 
   function addBook(value) {
-    const newBooks = [...books, { _id: uuid(), title: value, comments: [] }];
-    setBooks(newBooks);
+    //const newBooks = [...books, { _id: uuid(), title: value, comments: [] }];
+    //=setBooks(newBooks);
+
+    
+    
+    fetch("http://localhost:5000/api/books", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title: value
+      })
+    })
+      .then(res => res.json())
+      .then(data0 => {
+        console.log(data0);
+        //window.location.reload(true);
+      });
+
+
   }
 
   function addComment(value) {
