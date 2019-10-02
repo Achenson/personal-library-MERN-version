@@ -1,4 +1,5 @@
 //action types, seperate file?
+import store from '../store.js';
 
 export const FETCH_BOOKS = "FETCH_POSTS";
 //export const COMMENTS = 'COMMENTS';
@@ -33,14 +34,15 @@ export const fetchBooks = () => dispatch => {
 };
 
 export const dispComments = index => dispatch => {
+
   const newComments = {
     isHidden: false,
     isDeleted: false,
     isAllDeleted: false,
     index: index,
-    _id: books[index]._id,
-    title: books[index].title,
-    comments: books[index].comments
+    _id: store.getState().totalState.books[index]._id,
+    title: store.getState().totalState.books[index].title,
+    comments: store.getState().totalState.books[index].comments
   };
 
   dispatch({
@@ -68,10 +70,10 @@ export const deleteBook = currentId => dispatch => {
         isHidden: false,
         isDeleted: true,
         isAllDeleted: false,
-        index: comments.index,
-        _id: comments._id,
-        title: comments.title,
-        comments: comments.comments
+        index: store.getState().totalState.comments.index,
+        _id: store.getState().totalState.comments._id,
+        title: store.getState().totalState.comments.title,
+        comments: store.getState().totalState.comments.comments
       };
 
       dispatch({
@@ -93,10 +95,10 @@ export const deleteAllBooks = () => dispatch => {
         isHidden: false,
         isDeleted: false,
         isAllDeleted: true,
-        index: comments.index,
-        _id: comments._id,
-        title: comments.title,
-        comments: comments.comments
+        index: store.getState().totalState.comments.index,
+        _id: store.getState().totatState.comments._id,
+        title: store.getState().totalState.comments.title,
+        comments: store.getState().totalState.comments.comments
       };
 
       dispatch({

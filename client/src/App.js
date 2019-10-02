@@ -145,6 +145,14 @@ function Comments({ comments, addComment, deleteBook, books, deleteAllBooks }) {
 }
 
 function BooksDisplay({ index, book, dispComments }) {
+
+
+
+
+  
+
+
+
   return (
     <div>
       <div className="BooksDisplay">
@@ -157,10 +165,12 @@ function BooksDisplay({ index, book, dispComments }) {
       </div>
     </div>
   );
+
+  
 }
 
 function App() {
-  const [books, setBooks] = useState([]);
+  //const [books, setBooks] = useState([]);
 
   useEffect(() => {
     fetchBooks();
@@ -190,7 +200,7 @@ function App() {
     .catch((err) => console.log(err))
     */
   });
-
+/*
   const [comments, setComments] = useState({
     isHidden: true,
     isDeleted: false,
@@ -199,7 +209,7 @@ function App() {
     title: "no title",
     comments: []
   });
-
+*/
 /*
   function dispComments(index) { //when selecting a book!
     const newComments = {
@@ -420,4 +430,12 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    books: state.totalState.books, // (1)
+    comments: state.totalState.comments
+  }
+};
+
+export default connect(mapStateToProps, {fetchBooks, dispComments, deleteAllBooks, deleteBook})(App); // (3)
+//export default App;
