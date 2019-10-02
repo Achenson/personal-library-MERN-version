@@ -2,6 +2,17 @@ import React, { useState, useEffect } from "react";
 //import uuid from "uuid";
 import "./App.css";
 
+import {Provider} from 'react-redux';
+
+import store from './store';
+
+import { connect } from 'react-redux';
+
+import {fetchBooks, dispComments, deleteAllBooks, deleteBook} from './actions/postActions'
+
+
+
+
 /*
 
 App ( F dispComents F addBook)  | 2x state -> books, comments to disply (for clicked book)
@@ -152,6 +163,9 @@ function App() {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
+    fetchBooks();
+    //////////////////////////
+    /*
     async function fetchData() {
       const res = await fetch("http://localhost:5000/api/books");
       res
@@ -162,6 +176,8 @@ function App() {
 
     fetchData();
 
+  */
+    ///////////////////////
     /*
     fetch("http://localhost:5000/api/books")
     
@@ -184,7 +200,8 @@ function App() {
     comments: []
   });
 
-  function dispComments(index) {
+/*
+  function dispComments(index) { //when selecting a book!
     const newComments = {
       isHidden: false,
       isDeleted: false,
@@ -197,7 +214,7 @@ function App() {
 
     setComments(newComments);
   }
-
+*/
   function addBook(value) {
     //const newBooks = [...books, { _id: uuid(), title: value, comments: [] }];
     //=setBooks(newBooks);
@@ -246,6 +263,7 @@ function App() {
       });
   }
 
+  /*
   function deleteBook(currentId) {
     let singleBookURL = new URL(
       "http://localhost:5000" + "/api/books/" + currentId
@@ -262,13 +280,13 @@ function App() {
         console.log(data3);
       });
 
-    /*
-    const newBooks = [...books];
+    
+   // const newBooks = [...books];
 
-    newBooks.splice(comments.index, 1);
+    //newBooks.splice(comments.index, 1);
 
-    setBooks(newBooks);
-    */
+   // setBooks(newBooks);
+    
 
     const newComments = {
       isHidden: false,
@@ -283,6 +301,9 @@ function App() {
     setComments(newComments);
   }
 
+*/
+
+  /*
   function deleteAllBooks() {
     const newComments = {
       isHidden: false,
@@ -305,9 +326,10 @@ function App() {
         console.log(dataDelete);
       });
   }
-
+*/
   return (
-    <div className="App">
+    <Provider store={store}>
+      <div className="App">
       <div style={{ textAlign: "center" }}>
         <h1>Personal Library </h1>
         <h3 style={{ color: "gray" }}>
@@ -392,6 +414,9 @@ function App() {
         deleteAllBooks={deleteAllBooks}
       />
     </div>
+
+    </Provider>
+    
   );
 }
 
