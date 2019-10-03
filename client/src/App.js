@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 //import uuid from "uuid";
 import "./App.css";
 
-import {Provider} from 'react-redux';
+//import {Provider} from 'react-redux';
 
-import store from './store';
+//import store from './store';
 
 import { connect } from 'react-redux';
 
@@ -50,7 +50,7 @@ function NewBookForm({ addBook }) {
   );
 }
 
-function Comments({ comments, addComment, deleteBook, books, deleteAllBooks }) {
+function Comments({comments, addComment, deleteBook, books, deleteAllBooks }) {
   const [value, setValue] = useState("");
 
   function handleSubmit(e) {
@@ -168,8 +168,8 @@ function BooksDisplay({ index, book, dispComments }) {
 
   
 }
-
-function App() {
+//!!!!! imported actions creators must be passed here as props
+function App({books, comments, fetchBooks, dispComments, deleteAllBooks, deleteBook}) {
   //const [books, setBooks] = useState([]);
 
   useEffect(() => {
@@ -252,7 +252,7 @@ function App() {
     //setBooks(booksWithNewComments);
 
     let singleBookURL = new URL(
-      "http://localhost:5000" + "/api/books/" + currentId
+      "http://localhost:5000/api/books/" + currentId
     );
 
     fetch(singleBookURL, {
@@ -338,7 +338,7 @@ function App() {
   }
 */
   return (
-    <Provider store={store}>
+    
       <div className="App">
       <div style={{ textAlign: "center" }}>
         <h1>Personal Library </h1>
@@ -425,7 +425,7 @@ function App() {
       />
     </div>
 
-    </Provider>
+    
     
   );
 }

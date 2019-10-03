@@ -53,8 +53,9 @@ export const dispComments = index => dispatch => {
 
 export const deleteBook = currentId => dispatch => {
   let singleBookURL = new URL(
-    "http://localhost:5000" + "/api/books/" + currentId
+    "http://localhost:5000/api/books/" + currentId
   );
+
 
   fetch(singleBookURL, {
     method: "DELETE",
@@ -75,6 +76,9 @@ export const deleteBook = currentId => dispatch => {
         title: store.getState().totalState.comments.title,
         comments: store.getState().totalState.comments.comments
       };
+
+      
+
 
       dispatch({
         type: DELETE_BOOK,

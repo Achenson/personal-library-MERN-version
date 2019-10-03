@@ -19,6 +19,7 @@ const initialState = {
   comments: {
     isHidden: true,
     isDeleted: false,
+    isAllDeleted: false,
     index: null,
     _id: "no id",
     title: "no title",
@@ -34,27 +35,27 @@ function postReducer(state = initialState, action) {
       return {
         ...state,
         books: action.payload
-      };
+      }
     case DELETE_ALL:
       return {
         ...state,
         //books state changed automatically?
         comments: action.payload
-      };
-
+      }
     case DISPLAY_COMMENTS:
       return {
         ...state,
         comments: action.payload
-      };
-
-  
+      }
     case DELETE_BOOK:
       return {
         ...state,
+        //books: [],
         //books state changed automatically?
-        comments: action.payload2
-      };
+        comments: action.payload
+      }
+     default:
+      return state;
   }
 }
 
