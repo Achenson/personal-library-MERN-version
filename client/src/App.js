@@ -412,7 +412,10 @@ function App({
           (To run tests: install mocha globally, type 'mocha' in the terminal).
         </li>
         <li>
-          <b>REACT hooks Front-End implemented</b>
+          <b>REACT hooks Front-End implemented.</b>
+        </li>
+        <li>
+          <b>REDUX implemented.</b>
         </li>
       </ol>
       <hr></hr>
