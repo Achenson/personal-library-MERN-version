@@ -83,65 +83,67 @@ function Comments({comments, addComment, deleteBook, books, deleteAllBooks }) {
         <p>All books deleted</p>
       </div>
     );
+  } else {
+    return (
+      <div>
+        <p>
+          <b>{comments.title}</b>
+          {` (id: ${comments._id})`}
+        </p>
+        {comments.isDeleted ? (
+          <div>
+            <div style={{ borderStyle: "solid", borderWidth: "thin" }}>
+              <p>delete successful</p>
+              <br></br>
+              <br></br>
+              <p>Refresh the page</p>
+            </div>
+            <button onClick={deleteAllBooks}>Delete all books...</button>
+          </div>
+        ) : (
+          <div>
+            <div
+              style={{
+                borderStyle: "solid",
+                borderWidth: "thin",
+                padding: "5px"
+              }}
+            >
+              <ol>
+                {books[comments.index].comments.map((comment, index) => (
+                  <li key={index}>{comment}</li>
+                ))}
+              </ol>
+              <form onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  placeholder="New Comment"
+                  value={value}
+                  onChange={e => setValue(e.target.value)}
+                />
+                <br></br>
+                <button style={{ width: "148px", height: "25px" }}>
+                  Add Comment
+                </button>
+              </form>
+              <button
+                style={{ width: "148px", height: "25px" }}
+                onClick={() => deleteBook(comments._id)}
+              >
+                Delete Book
+              </button>
+            </div>
+  
+            <br></br>
+            <button onClick={deleteAllBooks}>Delete all books...</button>
+          </div>
+        )}
+        <div></div>
+      </div>
+    );
   }
 
-  return (
-    <div>
-      <p>
-        <b>{comments.title}</b>
-        {` (id: ${comments._id})`}
-      </p>
-      {comments.isDeleted ? (
-        <div>
-          <div style={{ borderStyle: "solid", borderWidth: "thin" }}>
-            <p>delete successful</p>
-            <br></br>
-            <br></br>
-            <p>Refresh the page</p>
-          </div>
-          <button onClick={deleteAllBooks}>Delete all books...</button>
-        </div>
-      ) : (
-        <div>
-          <div
-            style={{
-              borderStyle: "solid",
-              borderWidth: "thin",
-              padding: "5px"
-            }}
-          >
-            <ol>
-              {books[comments.index].comments.map((comment, index) => (
-                <li key={index}>{comment}</li>
-              ))}
-            </ol>
-            <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                placeholder="New Comment"
-                value={value}
-                onChange={e => setValue(e.target.value)}
-              />
-              <br></br>
-              <button style={{ width: "148px", height: "25px" }}>
-                Add Comment
-              </button>
-            </form>
-            <button
-              style={{ width: "148px", height: "25px" }}
-              onClick={() => deleteBook(comments._id)}
-            >
-              Delete Book
-            </button>
-          </div>
 
-          <br></br>
-          <button onClick={deleteAllBooks}>Delete all books...</button>
-        </div>
-      )}
-      <div></div>
-    </div>
-  );
 }
 
 function BooksDisplay({ index, book, dispComments }) {

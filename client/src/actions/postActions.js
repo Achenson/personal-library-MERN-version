@@ -94,15 +94,15 @@ export const deleteAllBooks = () => dispatch => {
     .then(res => res.json())
     .then(dataDelete => {
       console.log(dataDelete);
-
+      
       const newComments = {
         isHidden: false,
         isDeleted: false,
         isAllDeleted: true,
-        index: store.getState().totalState.comments.index,
-        _id: store.getState().totatState.comments._id,
-        title: store.getState().totalState.comments.title,
-        comments: store.getState().totalState.comments.comments
+        index: null,
+        _id: 'no id',
+        title: 'no title',
+        comments: []
       };
 
       dispatch({
