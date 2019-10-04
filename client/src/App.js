@@ -17,12 +17,28 @@ import {
 } from "./actions/postActions";
 
 /*
+Redux + REact:
 
+Redux store: books (all books with all the data), comments (current book, changed on clicking each book)
+
+App structure:
+
+<App{books ,comments (both from redux store),
+fetchBooks, dispComments, deleteAllBooks,deleteBook,addComment}) (all from postActions)>      ??? za dużo??
+    <NewBookForm { addBook [from App, not from postActions] } |  1x state (value for input)>
+    mapped <BookDisplay { index(from mapping), book(from mapping), dispComments }>
+    <Comments {books, comments, addComment, deleteBook, deleteAllBooks} > | 1x state (value for input)
+ 
+
+
+React Only:
 App ( F dispComents F addBook)  | 2x state -> books, comments to disply (for clicked book)
     NewBookForm ( F. handleSubmit, -> addBook)to add a book    | 1x state (value for input)
     mapped BooksDisplay (-> dispComments ->index(from mapping) ->book(from mapping)) | stateless
     Comments (-> comments (state), books (state), addComment, deleteBook, books, deleteAllBooks) | 1x state (value for input)
 */
+
+//redux chrome extensions has to be installed!!!!!!
 
 function NewBookForm({ addBook }) {
   const [value, setValue] = useState("");
