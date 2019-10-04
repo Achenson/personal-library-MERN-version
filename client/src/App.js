@@ -53,7 +53,7 @@ function NewBookForm({ addBook }) {
   );
 }
 
-function Comments({ comments, addComment, deleteBook, deleteAllBooks }) {
+function Comments({books, comments, addComment, deleteBook, deleteAllBooks }) {
   const [value, setValue] = useState("");
 
   function handleSubmit(e) {
@@ -80,11 +80,16 @@ function Comments({ comments, addComment, deleteBook, deleteAllBooks }) {
   } else {
     if (comments.isAllDeleted) {
       return (
-        <div
+        <div>
+            <div
           style={{ borderStyle: "solid", borderWidth: "thin", padding: "5px" }}
         >
           <p>All books deleted</p>
         </div>
+        
+        {(books.length !== 0)  && <button onClick={() => deleteAllBooks()}>Delete all books...</button>}
+        </div>
+      
       );
     } else {
       return (

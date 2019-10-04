@@ -1,5 +1,5 @@
 //action types, seperate file?
-import store from '../store.js';
+import store from "../store.js";
 
 export const FETCH_BOOKS = "FETCH_POSTS";
 //export const COMMENTS = 'COMMENTS';
@@ -11,7 +11,6 @@ export const DELETE_ALL = "DELETE_ALL";
 export const DISPLAY_COMMENTS = "DISPLAY_COMMENTS";
 
 export const DELETE_BOOK = "DELETE_BOOK";
-
 
 //ADD_COMMENT jednak jest potrzeby, żeby komentarze były wyświetlane ze stanu
 //comments, inaczej appka padała przy delete jeśli komentarze były wyświetlone
@@ -36,7 +35,6 @@ export const fetchBooks = () => dispatch => {
 };
 
 export const dispComments = index => dispatch => {
-
   const newComments = {
     isHidden: false,
     isDeleted: false,
@@ -54,10 +52,7 @@ export const dispComments = index => dispatch => {
 };
 
 export const deleteBook = currentId => dispatch => {
-  let singleBookURL = new URL(
-    "http://localhost:5000/api/books/" + currentId
-  );
-
+  let singleBookURL = new URL("http://localhost:5000/api/books/" + currentId);
 
   fetch(singleBookURL, {
     method: "DELETE",
@@ -79,9 +74,6 @@ export const deleteBook = currentId => dispatch => {
         comments: store.getState().totalState.comments.comments
       };
 
-      
-
-
       dispatch({
         type: DELETE_BOOK,
         payload: newComments
@@ -96,14 +88,14 @@ export const deleteAllBooks = () => dispatch => {
     .then(res => res.json())
     .then(dataDelete => {
       console.log(dataDelete);
-      
+
       const newComments = {
         isHidden: false,
         isDeleted: false,
         isAllDeleted: true,
         index: null,
-        _id: 'no id',
-        title: 'no title',
+        _id: "no id",
+        title: "no title",
         comments: []
       };
 
@@ -115,49 +107,46 @@ export const deleteAllBooks = () => dispatch => {
 };
 
 export const addComment = (value, currentId) => dispatch => {
-      //const booksWithNewComments = [...books];
-    //booksWithNewComments[comments.index].comments.push(value);
-    //setBooks(booksWithNewComments);
+  //const booksWithNewComments = [...books];
+  //booksWithNewComments[comments.index].comments.push(value);
+  //setBooks(booksWithNewComments);
 
-    let singleBookURL = new URL(
-      "http://localhost:5000/api/books/" + currentId
-    );
+  let singleBookURL = new URL("http://localhost:5000/api/books/" + currentId);
 
-    fetch(singleBookURL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: JSON.stringify({
-        id: currentId,
-        comment: value
-      })
+  fetch(singleBookURL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: JSON.stringify({
+      id: currentId,
+      comment: value
     })
-      .then(res => res.json())
-      .then(data2 => {
-        //updating comments
-        console.log(data2);
-      });
+  })
+    .then(res => res.json())
+    .then(data2 => {
+      //updating comments
+      console.log(data2);
+    });
 
-      let newArrayOfComments = store.getState().totalState.comments.comments
-      console.log(newArrayOfComments);
-      newArrayOfComments.push(value);
-      console.log(newArrayOfComments);
+  let newArrayOfComments = store.getState().totalState.comments.comments;
+  console.log(newArrayOfComments);
+  newArrayOfComments.push(value);
+  console.log(newArrayOfComments);
 
-      const newComments = {
-        isHidden: false,
-        isDeleted: false,
-        isAllDeleted: false,
-        index: store.getState().totalState.comments.index,
-        _id: store.getState().totalState.comments._id,
-        title: store.getState().totalState.comments.title,
-        comments: newArrayOfComments
-      };
+  const newComments = {
+    isHidden: false,
+    isDeleted: false,
+    isAllDeleted: false,
+    index: store.getState().totalState.comments.index,
+    _id: store.getState().totalState.comments._id,
+    title: store.getState().totalState.comments.title,
+    comments: newArrayOfComments
+  };
 
-
-      dispatch({
-        type: ADD_COMMENT,
-        payload: newComments
-      });
-}
+  dispatch({
+    type: ADD_COMMENT,
+    payload: newComments
+  });
+};
