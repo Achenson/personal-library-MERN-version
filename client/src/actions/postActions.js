@@ -9,11 +9,13 @@ export const FETCH_BOOKS = "FETCH_POSTS";
 export const DELETE_ALL = "DELETE_ALL";
 
 export const DISPLAY_COMMENTS = "DISPLAY_COMMENTS";
-//ADD_COMMENT nie jest potrzebny bo poj. komentarz
-//jest tylko w stacie lokalnym!
-//export const ADD_COMMENT = 'ADD_COMMENT';
+
 export const DELETE_BOOK = "DELETE_BOOK";
 
+
+//ADD_COMMENT jednak jest potrzeby, żeby komentarze były wyświetlane ze stanu
+//comments, inaczej appka padała przy delete jeśli komentarze były wyświetlone
+export const ADD_COMMENT = "ADD_COMMENT";
 //postAcions - seperate file?
 
 export const fetchBooks = () => dispatch => {
@@ -111,3 +113,51 @@ export const deleteAllBooks = () => dispatch => {
       });
     });
 };
+
+export const addComment = (value, currentId) => dispatch => {
+      //const booksWithNewComments = [...books];
+    //booksWithNewComments[comments.index].comments.push(value);
+    //setBooks(booksWithNewComments);
+
+    let singleBookURL = new URL(
+      "http://localhost:5000/api/books/" + currentId
+    );
+
+    fetch(singleBookURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify({
+        id: currentId,
+        comment: value
+      })
+    })
+      .then(res => res.json())
+      .then(data2 => {
+        //updating comments
+        console.log(data2);
+      });
+
+      let newArrayOfComments = store.getState().totalState.comments.comments
+      console.log(newArrayOfComments);
+      newArrayOfComments.push(value);
+      console.log(newArrayOfComments);
+
+      const newComments = {
+        isHidden: false,
+        isDeleted: false,
+        isAllDeleted: false,
+        index: store.getState().totalState.comments.index,
+        _id: store.getState().totalState.comments._id,
+        title: store.getState().totalState.comments.title,
+        comments: newArrayOfComments
+      };
+
+
+      dispatch({
+        type: ADD_COMMENT,
+        payload: newComments
+      });
+}

@@ -6,12 +6,15 @@ import "./App.css";
 
 //import store from './store';
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import {fetchBooks, dispComments, deleteAllBooks, deleteBook} from './actions/postActions'
-
-
-
+import {
+  fetchBooks,
+  dispComments,
+  deleteAllBooks,
+  deleteBook,
+  addComment
+} from "./actions/postActions";
 
 /*
 
@@ -50,7 +53,7 @@ function NewBookForm({ addBook }) {
   );
 }
 
-function Comments({comments, addComment, deleteBook, books, deleteAllBooks }) {
+function Comments({ comments, addComment, deleteBook, deleteAllBooks }) {
   const [value, setValue] = useState("");
 
   function handleSubmit(e) {
@@ -58,6 +61,7 @@ function Comments({comments, addComment, deleteBook, books, deleteAllBooks }) {
 
     if (!value) return;
     addComment(value, comments._id);
+    console.log("test");
     setValue("");
   }
 
@@ -70,91 +74,85 @@ function Comments({comments, addComment, deleteBook, books, deleteAllBooks }) {
           <p>Select a book to see it's details and comments</p>
         </div>
         <br></br>
-        <button onClick={deleteAllBooks}>Delete all books...</button>
-      </div>
-    );
-  }
-
-  if (comments.isAllDeleted) {
-    return (
-      <div
-        style={{ borderStyle: "solid", borderWidth: "thin", padding: "5px" }}
-      >
-        <p>All books deleted</p>
+        <button onClick={() => deleteAllBooks()}>Delete all books...</button>
       </div>
     );
   } else {
-    return (
-      <div>
-        <p>
-          <b>{comments.title}</b>
-          {` (id: ${comments._id})`}
-        </p>
-        {comments.isDeleted ? (
-          <div>
-            <div style={{ borderStyle: "solid", borderWidth: "thin" }}>
-              <p>delete successful</p>
-              <br></br>
-              <br></br>
-              <p>Refresh the page</p>
-            </div>
-            <button onClick={deleteAllBooks}>Delete all books...</button>
-          </div>
-        ) : (
-          <div>
-            <div
-              style={{
-                borderStyle: "solid",
-                borderWidth: "thin",
-                padding: "5px"
-              }}
-            >
-              <ol>
-                {books[comments.index].comments.map((comment, index) => (
-                  <li key={index}>{comment}</li>
-                ))}
-              </ol>
-              <form onSubmit={handleSubmit}>
-                <input
-                  type="text"
-                  placeholder="New Comment"
-                  value={value}
-                  onChange={e => setValue(e.target.value)}
-                />
+    if (comments.isAllDeleted) {
+      return (
+        <div
+          style={{ borderStyle: "solid", borderWidth: "thin", padding: "5px" }}
+        >
+          <p>All books deleted</p>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <p>
+            <b>{comments.title}</b>
+            {` (id: ${comments._id})`}
+          </p>
+          {comments.isDeleted ? (
+            <div>
+              <div style={{ borderStyle: "solid", borderWidth: "thin" }}>
+                <p>delete successful</p>
                 <br></br>
-                <button style={{ width: "148px", height: "25px" }}>
-                  Add Comment
-                </button>
-              </form>
-              <button
-                style={{ width: "148px", height: "25px" }}
-                onClick={() => deleteBook(comments._id)}
-              >
-                Delete Book
+                <br></br>
+                <p>Refresh the page</p>
+              </div>
+              <button onClick={() => deleteAllBooks()}>
+                Delete all books...
               </button>
             </div>
-  
-            <br></br>
-            <button onClick={deleteAllBooks}>Delete all books...</button>
-          </div>
-        )}
-        <div></div>
-      </div>
-    );
+          ) : (
+            <div>
+              <div
+                style={{
+                  borderStyle: "solid",
+                  borderWidth: "thin",
+                  padding: "5px"
+                }}
+              >
+                <ol>
+                  {comments.comments.map((comment, index) => (
+                    <li key={index}>{comment}</li>
+                  ))}
+                </ol>
+                <form onSubmit={handleSubmit}>
+                  <input
+                    type="text"
+                    placeholder="New Comment"
+                    value={value}
+                    onChange={e => setValue(e.target.value)}
+                  />
+                  <br></br>
+                  <button style={{ width: "148px", height: "25px" }}>
+                    Add Comment
+                  </button>
+                </form>
+                <button
+                  style={{ width: "148px", height: "25px" }}
+                  onClick={() => deleteBook(comments._id)}
+                >
+                  Delete Book
+                </button>
+              </div>
+
+              <br></br>
+              <button onClick={() => deleteAllBooks()}>
+                Delete all books...
+              </button>
+            </div>
+          )}
+          <div></div>
+        </div>
+      );
+    }
   }
-
-
 }
 
 function BooksDisplay({ index, book, dispComments }) {
-
-
-
-
-  
-
-
-
   return (
     <div>
       <div className="BooksDisplay">
@@ -167,11 +165,17 @@ function BooksDisplay({ index, book, dispComments }) {
       </div>
     </div>
   );
-
-  
 }
 //!!!!! imported actions creators must be passed here as props
-function App({books, comments, fetchBooks, dispComments, deleteAllBooks, deleteBook}) {
+function App({
+  books,
+  comments,
+  fetchBooks,
+  dispComments,
+  deleteAllBooks,
+  deleteBook,
+  addComment
+}) {
   //const [books, setBooks] = useState([]);
 
   useEffect(() => {
@@ -202,7 +206,7 @@ function App({books, comments, fetchBooks, dispComments, deleteAllBooks, deleteB
     .catch((err) => console.log(err))
     */
   });
-/*
+  /*
   const [comments, setComments] = useState({
     isHidden: true,
     isDeleted: false,
@@ -212,7 +216,7 @@ function App({books, comments, fetchBooks, dispComments, deleteAllBooks, deleteB
     comments: []
   });
 */
-/*
+  /*
   function dispComments(index) { //when selecting a book!
     const newComments = {
       isHidden: false,
@@ -248,6 +252,7 @@ function App({books, comments, fetchBooks, dispComments, deleteAllBooks, deleteB
       });
   }
 
+  /*
   function addComment(value, currentId) {
     //const booksWithNewComments = [...books];
     //booksWithNewComments[comments.index].comments.push(value);
@@ -274,6 +279,8 @@ function App({books, comments, fetchBooks, dispComments, deleteAllBooks, deleteB
         console.log(data2);
       });
   }
+
+*/
 
   /*
   function deleteBook(currentId) {
@@ -340,8 +347,7 @@ function App({books, comments, fetchBooks, dispComments, deleteAllBooks, deleteB
   }
 */
   return (
-    
-      <div className="App">
+    <div className="App">
       <div style={{ textAlign: "center" }}>
         <h1>Personal Library </h1>
         <h3 style={{ color: "gray" }}>
@@ -426,18 +432,18 @@ function App({books, comments, fetchBooks, dispComments, deleteAllBooks, deleteB
         deleteAllBooks={deleteAllBooks}
       />
     </div>
-
-    
-    
   );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     books: state.totalState.books, // (1)
     comments: state.totalState.comments
-  }
+  };
 };
 
-export default connect(mapStateToProps, {fetchBooks, dispComments, deleteAllBooks, deleteBook})(App); // (3)
+export default connect(
+  mapStateToProps,
+  { fetchBooks, dispComments, deleteAllBooks, deleteBook, addComment }
+)(App); // (3)
 //export default App;

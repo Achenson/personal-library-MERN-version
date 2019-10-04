@@ -8,7 +8,8 @@ import {
   DELETE_ALL,
   DISPLAY_COMMENTS,
   
-  DELETE_BOOK
+  DELETE_BOOK,
+  ADD_COMMENT
 } from "../actions/postActions";
 
 const initialState = {
@@ -54,6 +55,14 @@ function postReducer(state = initialState, action) {
         //books state changed automatically?
         comments: action.payload
       }
+      case ADD_COMMENT:
+      return {
+        ...state,
+        //books: [],
+        //books state changed automatically?
+        comments: action.payload
+      } 
+
      default:
       return state;
   }
