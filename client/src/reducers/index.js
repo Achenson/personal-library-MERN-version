@@ -4,10 +4,8 @@ import { combineReducers } from "redux";
 
 import {
   FETCH_BOOKS,
-
   DELETE_ALL,
   DISPLAY_COMMENTS,
-  
   DELETE_BOOK,
   ADD_COMMENT
 } from "../actions/postActions";
@@ -36,34 +34,34 @@ function postReducer(state = initialState, action) {
       return {
         ...state,
         books: action.payload
-      }
+      };
     case DELETE_ALL:
       return {
         ...state,
         //books state changed automatically?
         comments: action.payload
-      }
+      };
     case DISPLAY_COMMENTS:
       return {
         ...state,
         comments: action.payload
-      }
+      };
     case DELETE_BOOK:
       return {
         ...state,
         //books: [],
         //books state changed automatically?
         comments: action.payload
-      }
-      case ADD_COMMENT:
+      };
+    case ADD_COMMENT:
       return {
         ...state,
         //books: [],
         //books state changed automatically?
         comments: action.payload
-      } 
+      };
 
-     default:
+    default:
       return state;
   }
 }

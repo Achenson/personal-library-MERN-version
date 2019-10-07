@@ -17,8 +17,6 @@ import {
 } from "./actions/postActions";
 
 /*
-Redux + REact:
-
 Redux store: books (all books with all the data), comments (current book, changed on clicking each book)
 
 App structure:
@@ -29,7 +27,6 @@ fetchBooks, dispComments, deleteAllBooks,deleteBook,addComment}) (all from postA
     mapped <BookDisplay { index(from mapping), book(from mapping), dispComments }>
     <Comments {books, comments, addComment, deleteBook, deleteAllBooks} > | 1x state (value for input)
  
-
 
 React Only:
 App ( F dispComents F addBook)  | 2x state -> books, comments to disply (for clicked book)
@@ -69,7 +66,7 @@ function NewBookForm({ addBook }) {
   );
 }
 
-function Comments({books, comments, addComment, deleteBook, deleteAllBooks }) {
+function Comments({ books, comments, addComment, deleteBook, deleteAllBooks }) {
   const [value, setValue] = useState("");
 
   function handleSubmit(e) {
@@ -97,15 +94,22 @@ function Comments({books, comments, addComment, deleteBook, deleteAllBooks }) {
     if (comments.isAllDeleted) {
       return (
         <div>
-            <div
-          style={{ borderStyle: "solid", borderWidth: "thin", padding: "5px" }}
-        >
-          <p>All books deleted</p>
+          <div
+            style={{
+              borderStyle: "solid",
+              borderWidth: "thin",
+              padding: "5px"
+            }}
+          >
+            <p>All books deleted</p>
+          </div>
+
+          {books.length !== 0 && (
+            <button onClick={() => deleteAllBooks()}>
+              Delete all books...
+            </button>
+          )}
         </div>
-        
-        {(books.length !== 0)  && <button onClick={() => deleteAllBooks()}>Delete all books...</button>}
-        </div>
-      
       );
     } else {
       return (
@@ -201,61 +205,9 @@ function App({
 
   useEffect(() => {
     fetchBooks();
-    //////////////////////////
-    /*
-    async function fetchData() {
-      const res = await fetch("http://localhost:5000/api/books");
-      res
-        .json()
-        .then(res => setBooks(res))
-        .catch(err => console.log(err));
-    }
-
-    fetchData();
-
-  */
-    ///////////////////////
-    /*
-    fetch("http://localhost:5000/api/books")
-    
-    .then(res => {
-      console.log(res);
-      //console.log(books);
-      res.json();
-    })
-    .then(res => setBooks(res))
-    .catch((err) => console.log(err))
-    */
   });
-  /*
-  const [comments, setComments] = useState({
-    isHidden: true,
-    isDeleted: false,
-    index: null,
-    _id: "no id",
-    title: "no title",
-    comments: []
-  });
-*/
-  /*
-  function dispComments(index) { //when selecting a book!
-    const newComments = {
-      isHidden: false,
-      isDeleted: false,
-      isAllDeleted: false,
-      index: index,
-      _id: books[index]._id,
-      title: books[index].title,
-      comments: books[index].comments
-    };
 
-    setComments(newComments);
-  }
-*/
   function addBook(value) {
-    //const newBooks = [...books, { _id: uuid(), title: value, comments: [] }];
-    //=setBooks(newBooks);
-
     fetch("http://localhost:5000/api/books", {
       method: "POST",
       headers: {
@@ -273,100 +225,6 @@ function App({
       });
   }
 
-  /*
-  function addComment(value, currentId) {
-    //const booksWithNewComments = [...books];
-    //booksWithNewComments[comments.index].comments.push(value);
-    //setBooks(booksWithNewComments);
-
-    let singleBookURL = new URL(
-      "http://localhost:5000/api/books/" + currentId
-    );
-
-    fetch(singleBookURL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: JSON.stringify({
-        id: currentId,
-        comment: value
-      })
-    })
-      .then(res => res.json())
-      .then(data2 => {
-        //updating comments
-        console.log(data2);
-      });
-  }
-
-*/
-
-  /*
-  function deleteBook(currentId) {
-    let singleBookURL = new URL(
-      "http://localhost:5000" + "/api/books/" + currentId
-    );
-
-    fetch(singleBookURL, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(res => res.json())
-      .then(data3 => {
-        console.log(data3);
-      });
-
-    
-   // const newBooks = [...books];
-
-    //newBooks.splice(comments.index, 1);
-
-   // setBooks(newBooks);
-    
-
-    const newComments = {
-      isHidden: false,
-      isDeleted: true,
-      isAllDeleted: false,
-      index: comments.index,
-      _id: comments._id,
-      title: comments.title,
-      comments: comments.comments
-    };
-
-    setComments(newComments);
-  }
-
-*/
-
-  /*
-  function deleteAllBooks() {
-    const newComments = {
-      isHidden: false,
-      isDeleted: false,
-      isAllDeleted: true,
-      index: comments.index,
-      _id: comments._id,
-      title: comments.title,
-      comments: comments.comments
-    };
-
-    setComments(newComments);
-    //setBooks([]);
-
-    fetch("http://localhost:5000/api/books", {
-      method: "DELETE"
-    })
-      .then(res => res.json())
-      .then(dataDelete => {
-        console.log(dataDelete);
-      });
-  }
-*/
   return (
     <div className="App">
       <div style={{ textAlign: "center" }}>

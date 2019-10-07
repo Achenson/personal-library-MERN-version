@@ -1,4 +1,4 @@
-//action types, seperate file?
+//action types, should be in seperate file
 import store from "../store.js";
 
 export const FETCH_BOOKS = "FETCH_POSTS";
@@ -15,7 +15,7 @@ export const DELETE_BOOK = "DELETE_BOOK";
 //ADD_COMMENT jednak jest potrzeby, żeby komentarze były wyświetlane ze stanu
 //comments, inaczej appka padała przy delete jeśli komentarze były wyświetlone
 export const ADD_COMMENT = "ADD_COMMENT";
-//postAcions - seperate file?
+//postAcions - should be in seperate file
 
 export const fetchBooks = () => dispatch => {
   async function fetchData() {
@@ -107,10 +107,6 @@ export const deleteAllBooks = () => dispatch => {
 };
 
 export const addComment = (value, currentId) => dispatch => {
-  //const booksWithNewComments = [...books];
-  //booksWithNewComments[comments.index].comments.push(value);
-  //setBooks(booksWithNewComments);
-
   let singleBookURL = new URL("http://localhost:5000/api/books/" + currentId);
 
   fetch(singleBookURL, {
