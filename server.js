@@ -18,7 +18,8 @@ var app = express();
 app.use(helmet.noCache())
 app.use(helmet.hidePoweredBy({ setTo: 'PHP 4.2.0' }));
 
-
+//for glitch
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 
 app.use('/public', express.static(process.cwd() + '/public'));
@@ -40,6 +41,11 @@ fccTestingRoutes(app);
 
 //Routing for API 
 apiRoutes(app);  
+
+//for glitch
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+});
     
 //404 Not Found Middleware
 app.use(function(req, res, next) {
