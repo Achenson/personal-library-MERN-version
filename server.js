@@ -19,7 +19,7 @@ app.use(helmet.noCache())
 app.use(helmet.hidePoweredBy({ setTo: 'PHP 4.2.0' }));
 
 //for glitch
-app.use(express.static(path.join(__dirname, '../client/build')));
+app.use(express.static(path.join(__dirname, './client/build')));
 
 
 app.use('/public', express.static(process.cwd() + '/public'));
@@ -31,14 +31,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //Index page (static HTML)
 
-
+//commented out for glitch
+/*
 app.route('/')
   .get(function (req, res) {
    res.sendFile(process.cwd() + '/views/index.html');
   //res.sendFile(process.cwd() + '/client/public/index.html');
   });
 
-
+*/
 
 
 //For FCC testing purposes
@@ -49,7 +50,7 @@ apiRoutes(app);
 
 //for glitch
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
 });
     
 //404 Not Found Middleware
