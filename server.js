@@ -9,6 +9,7 @@ var fccTestingRoutes  = require('./routes/fcctesting.js');
 var runner            = require('./test-runner');
 var helmet        = require('helmet');
 
+var path = require('path');
 
 var app = express();
 
@@ -16,6 +17,8 @@ var app = express();
 
 app.use(helmet.noCache())
 app.use(helmet.hidePoweredBy({ setTo: 'PHP 4.2.0' }));
+
+
 
 
 app.use('/public', express.static(process.cwd() + '/public'));
