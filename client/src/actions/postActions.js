@@ -52,7 +52,7 @@ export const dispComments = index => dispatch => {
 };
 
 export const deleteBook = currentId => dispatch => {
-  let singleBookURL = new URL("/api/books/" + currentId);
+  let singleBookURL = new URL(window.location.origin + "/api/books/" + currentId);
 
   fetch(singleBookURL, {
     method: "DELETE",
@@ -107,7 +107,7 @@ export const deleteAllBooks = () => dispatch => {
 };
 
 export const addComment = (value, currentId) => dispatch => {
-  let singleBookURL = new URL("/api/books/" + currentId);
+  let singleBookURL = new URL(window.location.origin + "/api/books/" + currentId);
 
   fetch(singleBookURL, {
     method: "POST",
