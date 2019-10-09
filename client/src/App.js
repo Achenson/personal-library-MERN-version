@@ -208,7 +208,8 @@ function App({
   });
 
   function addBook(value) {
-    fetch("http://localhost:5000/api/books", {
+    // !!!!!!!!!!!!!!!!!!!!!!
+    fetch("/api/books", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

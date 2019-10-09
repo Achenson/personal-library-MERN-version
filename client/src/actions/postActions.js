@@ -19,7 +19,7 @@ export const ADD_COMMENT = "ADD_COMMENT";
 
 export const fetchBooks = () => dispatch => {
   async function fetchData() {
-    const res = await fetch("http://localhost:5000/api/books");
+    const res = await fetch("/api/books");
     res
       .json()
       .then(books =>
@@ -52,7 +52,7 @@ export const dispComments = index => dispatch => {
 };
 
 export const deleteBook = currentId => dispatch => {
-  let singleBookURL = new URL("http://localhost:5000/api/books/" + currentId);
+  let singleBookURL = new URL("/api/books/" + currentId);
 
   fetch(singleBookURL, {
     method: "DELETE",
@@ -82,7 +82,7 @@ export const deleteBook = currentId => dispatch => {
 };
 
 export const deleteAllBooks = () => dispatch => {
-  fetch("http://localhost:5000/api/books", {
+  fetch("/api/books", {
     method: "DELETE"
   })
     .then(res => res.json())
@@ -107,7 +107,7 @@ export const deleteAllBooks = () => dispatch => {
 };
 
 export const addComment = (value, currentId) => dispatch => {
-  let singleBookURL = new URL("http://localhost:5000/api/books/" + currentId);
+  let singleBookURL = new URL("/api/books/" + currentId);
 
   fetch(singleBookURL, {
     method: "POST",
